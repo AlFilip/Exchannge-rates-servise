@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+import React, {useEffect} from "react";
+
 import './App.css';
+import NavBar from "./components/Navbar/Navbar";
+import Converter from "./components/Converter/Converter";
+import {connect} from "react-redux";
+import {getCurrencyList} from "./redux/app-reducer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = props => {
+    useEffect(() => {
+        if (!props.isInitialised) props.getCurrencyList();
+    })
+
+    if (!props.isInitialised) return null;
+    return (
+        <>
+            <NavBar/>
+            <div className="contentWrapper">
+                <Converter/>
+                <Table/>
+            </div>
+        </>
+    );
 }
+const mapStateToProps = state => ({isInitialised: state.app.isInitialised})
 
-export default App;
+export default connect(mapStateToProps, {getCurrencyList})(App);
