@@ -19,7 +19,8 @@ const Converter = props => {
         })
         if (foundedCurrencies.length === 2) {
             ConverterApi.getCourse([props.value[1], props.value[3]]).then(data => {
-                setResult(`${props.value[0]} ${props.value[1]} = ${(+(data.data * props.value[0]).toFixed(2))} ${props.value[3]}`);
+                setResult(`${props.value[0]} ${props.value[1]} = 
+                ${(+(data.data * props.value[0]).toFixed(2))} ${props.value[3]}`);
             })
         }
     }, [props])

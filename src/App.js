@@ -5,6 +5,7 @@ import NavBar from "./components/Navbar/Navbar";
 import Converter from "./components/Converter/Converter";
 import {connect} from "react-redux";
 import {getCurrencyList} from "./redux/app-reducer";
+import CoursesList from "./components/CoursesList/CoursesList";
 
 const App = props => {
     useEffect(() => {
@@ -17,7 +18,7 @@ const App = props => {
             <NavBar/>
             <div className="contentWrapper">
                 <Converter/>
-                <Table/>
+                <CoursesList/>
             </div>
         </>
     );
