@@ -1,34 +1,36 @@
 import React, {useEffect, useState} from "react";
-
 import s from './Converter.module.css'
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {sendValue} from "../../redux/converter-reducer";
 import {ConverterApi} from "../api/api";
 
-const Converter = props => {
+
+const Converter = () => {
+    const currencyList = useSelector(state => state.app.currencyList)
+    const value = useSelector(state => state.converter.value)
+    const dispatch = useDispatch()
+
+
     const [formValue, setFormValue] = useState('');
     const [result, setResult] = useState('');
 
     useEffect(() => {
-        let foundedCurrencies = [];
-        props.currencyList.forEach(currency => {
-            if (currency.symbol === props.value[1]
-                || currency.symbol === props.value[3]) {
-                foundedCurrencies.push(currency);
-            }
-        })
+        const foundedCurrencies = currencyList.filter(cur => cur.symbol === value[1] || cur.symbol === value[3])
+
+        console.log(value)
         if (foundedCurrencies.length === 2) {
-            ConverterApi.getCourse([props.value[1], props.value[3]]).then(data => {
-                setResult(`${props.value[0]} ${props.value[1]} = 
-                ${(+(data.data * props.value[0]).toFixed(2))} ${props.value[3]}`);
+            console.log(value)
+            ConverterApi.getCourse([value[1], value[3]]).then(data => {
+                setResult(`${value[0]} ${value[1]} = 
+                ${(+(data.data * value[0]).toFixed(2))} ${value[3]}`);
             })
         }
-    }, [props])
+    }, [currencyList, value])
 
     const onFormChange = e => setFormValue(e.target.value);
     const onSubmit = e => {
         e.preventDefault();
-        props.sendValue(formValue);
+        dispatch(sendValue(formValue))
     }
 
     return (
@@ -42,11 +44,5 @@ const Converter = props => {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        currencyList: state.app.currencyList,
-        value: state.converter.value
-    }
-}
 
-export default connect(mapStateToProps, {sendValue})(Converter);
+export default Converter

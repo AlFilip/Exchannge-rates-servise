@@ -1,28 +1,29 @@
 import React, {useEffect} from "react";
-
 import './App.css';
 import NavBar from "./components/Navbar/Navbar";
 import Converter from "./components/Converter/Converter";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getCurrencyList} from "./redux/app-reducer";
-import CoursesList from "./components/CoursesList/CoursesList";
 
-const App = props => {
+const App = () => {
+    const isInitialised = useSelector(state => state.app.isInitialised)
+    const dispatch = useDispatch()
     useEffect(() => {
-        if (!props.isInitialised) props.getCurrencyList();
+        if (!isInitialised) {
+            dispatch(getCurrencyList())
+        }
     })
 
-    if (!props.isInitialised) return null;
+    if (!isInitialised) return null;
     return (
         <>
             <NavBar/>
             <div className="contentWrapper">
                 <Converter/>
-                <CoursesList/>
+                {/*<CoursesList/>*/}
             </div>
         </>
     );
 }
-const mapStateToProps = state => ({isInitialised: state.app.isInitialised})
 
-export default connect(mapStateToProps, {getCurrencyList})(App);
+export default App

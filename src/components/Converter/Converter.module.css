@@ -1,3 +1,18 @@
 .converterContent{
     margin-top: 30px;
+    padding: 15px;
+}
+
+.converterContent input{
+    width: 250px;
+    font-size: 24px;
+    border-radius: 8px;
+    padding: 4px 12px;
+    outline: none;
+}
+
+.converterContent button {
+    font-size: 24px;
+    border-radius: 8px;
+    padding: 4px 12px;
 }
