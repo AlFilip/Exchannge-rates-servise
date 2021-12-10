@@ -11,8 +11,7 @@ export const initApp = {
 }
 
 export const ConverterApi = {
-    getCourse(currencies) {
-        const [from, to] =currencies;
-        return axios.get(`https://api.coingate.com/v2/rates/merchant/${from}/${to}`).then(data=>data)
+    getCourse(from, to) {
+        return axios.get(`https://api.coingate.com/v2/rates/merchant/${from}/${to}`).then(data=>data.data)
     }
 }

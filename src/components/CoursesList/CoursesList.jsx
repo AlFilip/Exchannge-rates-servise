@@ -21,7 +21,7 @@ const CoursesList = props => {
             <ul>
                 {Object.keys(props.currencyList).map((oneKey, i) => {
                     return (
-                        <li key={i}>{oneKey} {props.currencyList[oneKey]}</li>
+                        <li key={i+ oneKey}>{oneKey} {props.currencyList[oneKey]}</li>
                     )
                 })}
             </ul>

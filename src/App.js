@@ -4,6 +4,7 @@ import NavBar from "./components/Navbar/Navbar";
 import Converter from "./components/Converter/Converter";
 import {useDispatch, useSelector} from "react-redux";
 import {getCurrencyList} from "./redux/app-reducer";
+import CoursesList from './components/CoursesList/CoursesList';
 
 const App = () => {
     const isInitialised = useSelector(state => state.app.isInitialised)
@@ -20,7 +21,7 @@ const App = () => {
             <NavBar/>
             <div className="contentWrapper">
                 <Converter/>
-                {/*<CoursesList/>*/}
+                <CoursesList/>
             </div>
         </>
     );

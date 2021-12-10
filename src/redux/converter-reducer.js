@@ -1,27 +1,49 @@
-const SEND_VALUE = 'SEND_VALUE';
+import {ConverterApi} from '../components/api/api';
 
-export const sendValueSuccess = value => ({type: SEND_VALUE, value})
-export const sendValue = value => dispatch => {
-    const arr = value.toUpperCase().split(' ');
-    if (arr.length === 4 && +arr[0] && (arr[2]==='IN' || arr[2]==='TO' || arr[2]==='AT'))
-        dispatch(sendValueSuccess(arr));
-}
+const SET_RESULT = 'SET_RESULT';
+const pretextValues = ['IN', 'TO', 'AT']
 
-
-
-const initState = {value: []};
+const initState = {
+    result: ''
+};
 
 const converterReducer = (state = initState, action) => {
     switch (action.type) {
-        case SEND_VALUE:
+        case SET_RESULT:
             return {
                 ...state,
-                value: [...action.value]
+                ...action.payload
             }
         default:
             return state
     }
 }
 
+
+export const setResult = payload => ({type: SET_RESULT, payload})
+
+export const processValue = value => (dispatch, getState) => {
+    const [count, from, pretext, to] = value.toUpperCase().split(' ');
+    if (+count && pretextValues.includes(pretext)) {
+        const currentCurrencies = getState().app.currencyList.filter(cur => [from, to].includes(cur.symbol))
+        if (currentCurrencies.length === 2) {
+            ConverterApi.getCourse(from, to).then(course => {
+                dispatch(setResult({result: `${count} ${from} = ${(+(course * count).toFixed(2))} ${to}`}))
+            })
+        }
+    }
+}
+
+
 export default converterReducer;
+
+
+
+
+
+
+
+
+
+
 

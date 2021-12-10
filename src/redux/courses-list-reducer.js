@@ -5,7 +5,7 @@ export const setCurrentCurrency = currency => ({type: SET_CURRENT_CURRENCY, curr
 export const setCurrencyList = currencyList => ({type: SET_CURRENCY_LIST, currencyList});
 
 
-const initState = {currentCurrency: 'RUB', currencyList: {}};
+const initState = {currentCurrency: 'USD', currencyList: {}};
 
 const coursesListReducer = (state = initState, action) => {
     switch (action.type) {
